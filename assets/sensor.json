@@ -1,0 +1,56 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+         {
+           "type": "Feature",
+           "geometry": {
+              "type": "Point",
+              "coordinates": [
+                 107.435762,
+                  -7.172735
+              ]
+           },
+           "properties": {
+              "time": "2022-11-12T05:08:45.000",
+              "lat":  -7.172735,
+              "lon": 107.435762,
+              "status": 1,
+              "stasiun": "Lokasi EWS 1"
+           }
+        },
+         {
+           "type": "Feature",
+           "geometry": {
+              "type": "Point",
+              "coordinates": [
+                 107.443347,
+                  -7.183114
+              ]
+           },
+           "properties": {
+              "time": "2022-11-12T05:08:46.000",
+              "lat":  -7.183114,
+              "lon": 107.443347,
+              "status": 1,
+              "stasiun": "Pos Basecamp"
+           }
+        },
+         {
+           "type": "Feature",
+           "geometry": {
+              "type": "Point",
+              "coordinates": [
+                 107.439478,
+                  -7.179907
+              ]
+           },
+           "properties": {
+              "time": "2022-11-12T05:08:46.000",
+              "lat":  -7.179907,
+              "lon": 107.439478,
+              "status": 1,
+              "stasiun": "Pos PPL05"
+           }
+        }
+  ]
+}
