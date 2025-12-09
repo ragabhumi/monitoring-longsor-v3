@@ -93,7 +93,7 @@ def fmt_time_utc(ts: dt.datetime | None) -> str:
 def decide_status_from_now(last_seen: dt.datetime | None,
                            has_threshold_breach: bool,
                            last_status_txt: str | None,
-                           stale_hours=3) -> str:
+                           stale_hours=8) -> str:
     """OFF jika last_seen >= 3 jam; jika tidak, ON bila teks ON atau ada breach; else CEK."""
     if last_seen is None:
         return "OFF"
@@ -134,7 +134,6 @@ def to_float(x):
         return float(x)
     except Exception:
         return None
-
 
 
 
