@@ -166,8 +166,8 @@ marker_layer = dl.LayerGroup(id="marker-layer", children=[])
 
 the_map = dl.Map(
     id="map",
-    center=[-7.182, 107.429],
-    zoom=15,
+    center=[-7.986873235813945, 111.71034490952675],
+    zoom=18,
     style={"width": "100%", "height": "calc(100vh - 64px - 36px)", "margin": "0", "display": "block"},
     children=map_children + [marker_layer]
 )
@@ -295,3 +295,4 @@ def build_layout():
         style={"margin": 0, "padding": 0, "height": "100vh",
                "overflow": "hidden", "display": "flex", "flexDirection": "column"}
     )
+
