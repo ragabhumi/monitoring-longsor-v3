@@ -86,7 +86,7 @@ def make_marker_component(meta: dict, dyn: dict | None):
         except Exception:
             has_breach = False
 
-    status_now = decide_status_from_now(last_seen_dt, has_breach, last_status_txt, stale_hours=3)
+    status_now = decide_status_from_now(last_seen_dt, has_breach, last_status_txt, stale_hours=8)
     cfg = STATUS_STYLE[status_now]
     icon_cfg = ICON_MAP[status_now]
     last_txt = fmt_time_utc(last_seen_dt)
@@ -179,7 +179,7 @@ def update_drawer(is_open, selected, style, x_range, ws_data):
         has_breach = False
         if not df.empty and (df[["X","Y","Z"]].abs() > 1.0).any(axis=1).tail(50).any():
             has_breach = True
-        status = decide_status_from_now(last_seen, has_breach, last_status_txt, stale_hours=3)
+        status = decide_status_from_now(last_seen, has_breach, last_status_txt, stale_hours=8)
         last_txt = fmt_time_utc(last_seen)
         initial_content = graphs_layout(selected["name"], df, x_range=x_range,
                                         status_text=status, last_seen_text=last_txt)
@@ -293,7 +293,7 @@ def render_tab(active_tab, ws_data, _tick, selected, x_range):
         return html.Div()
     df, last_seen, last_status_txt = df_from_ws(ws_data, selected["site"], selected["sid"])
     has_breach = (not df.empty) and (df[["X","Y","Z"]].abs() > 1.0).any(axis=1).tail(50).any()
-    status = decide_status_from_now(last_seen, has_breach, last_status_txt, stale_hours=3)
+    status = decide_status_from_now(last_seen, has_breach, last_status_txt, stale_hours=8)
     last_txt = fmt_time_utc(last_seen)
 
     if active_tab == "tab-graph":
