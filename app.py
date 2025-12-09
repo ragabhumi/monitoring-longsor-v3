@@ -35,7 +35,7 @@ ATTR_ESRI = "Tiles © Esri"
 # Sensor metadata (ADEL 1 & 2)
 def mk_sensor(site, sid, lat, lon):
     return {"site": site, "sid": sid, "id": f"{site.upper()}-{sid}",
-            "name": f"{site.replace('_',' ').title()} • {sid}",
+            "name": f"{site.replace('_',' ').upper()} • {sid}",
             "lat": lat, "lon": lon}
 
 SENSORS = [
@@ -97,7 +97,7 @@ def decide_status_from_now(last_seen: dt.datetime | None,
     """OFF jika last_seen >= 3 jam; jika tidak, ON bila teks ON atau ada breach; else CEK."""
     if last_seen is None:
         return "OFF"
-    now = dt.datetime.now(UTC)
+    now = dt.datetime.now(dt.timezone.utc)
     if last_seen.tzinfo is None:
         last_seen = last_seen.replace(tzinfo=UTC)
     if (now - last_seen) >= dt.timedelta(hours=stale_hours):
@@ -134,6 +134,7 @@ def to_float(x):
         return float(x)
     except Exception:
         return None
+
 
 
 
