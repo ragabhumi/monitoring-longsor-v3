@@ -55,12 +55,12 @@ SENSORS = [
     #mk_sensor("adel_03", "001", -7.167185076832787, 107.41598156819852),
     #mk_sensor("adel_03", "002", -7.171742335327068, 107.4197581754299),
     # Adel ITS 1
-    mk_sensor("adel_its_01", "1", -7.986852, 111.710213),
-    mk_sensor("adel_its_01", "2", -7.986938, 111.710331),
-    mk_sensor("adel_its_01", "3", -7.986995, 111.710469),
-    mk_sensor("adel_its_01", "4", -7.986949, 111.709909),
-    mk_sensor("adel_its_01", "5", -7.987028, 111.710118),
-    mk_sensor("adel_its_01", "6", -7.987231, 111.710224),
+    mk_sensor("adel_its_01", "001", -7.986852, 111.710213),
+    mk_sensor("adel_its_01", "002", -7.986938, 111.710331),
+    mk_sensor("adel_its_01", "003", -7.986995, 111.710469),
+    mk_sensor("adel_its_01", "004", -7.986949, 111.709909),
+    mk_sensor("adel_its_01", "005", -7.987028, 111.710118),
+    mk_sensor("adel_its_01", "006", -7.987231, 111.710224),
 ]
 
 # Status & ikon
@@ -134,6 +134,7 @@ def to_float(x):
         return float(x)
     except Exception:
         return None
+
 
 
 
