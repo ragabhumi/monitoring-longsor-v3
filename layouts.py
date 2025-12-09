@@ -199,9 +199,9 @@ def graphs_layout(sensor_name, df, x_range=None, status_text="", last_seen_text=
         else:
             fig.update_xaxes(autorange=True)
         fig.update_layout(
-            title=f"{sensor_name} • {col}",
-            margin=dict(l=40, r=10, t=34, b=28),
-            xaxis_title="Waktu (UTC)", yaxis_title=f"Nilai {col}",
+            title=dict(text=f"{sensor_name}", font=dict(size=12)),
+            margin=dict(l=40, r=10, t=24, b=18),
+            xaxis_title=dict(text="Waktu (UTC)", font=dict(size=12)), yaxis_title=dict(text=f"Nilai {col}", font=dict(size=12)),
             uirevision="keep",
             legend=dict(
                 x=0.99, y=0.99, xanchor="right", yanchor="top",
@@ -225,7 +225,7 @@ def graphs_layout(sensor_name, df, x_range=None, status_text="", last_seen_text=
                    figure=make_fig("Z"),
                    style={"height": "33.333%", "flex": "1 1 0", "minHeight": 0},
                    config={"responsive": True})],
-        style={"display": "flex", "flexDirection": "column", "gap": "8px", "height": "100%"}
+        style={"display": "flex", "flexDirection": "column", "gap": "8px", "height": "85%"}
     )
 
     if df.empty:
