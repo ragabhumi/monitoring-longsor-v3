@@ -166,6 +166,10 @@ marker_layer = dl.LayerGroup(id="marker-layer", children=[])
 
 marker_layer2 = dl.Marker(
             position=[-7.991325, 111.738081],
+            icon=dict(
+                iconUrl=app.get_asset_url(src="/assets/logo.png"),
+                iconSize=[30, 30],
+                iconAnchor=[15, 30]),
             children=[
                 dl.Tooltip("ADEL Host Sooko")
             ]
@@ -173,8 +177,8 @@ marker_layer2 = dl.Marker(
 
 the_map = dl.Map(
     id="map",
-    center=[-7.986873235813945, 111.71034490952675],
-    zoom=18,
+    center=[-7.990376583513643, 111.72472656353057],
+    zoom=15,
     style={"width": "100%", "height": "calc(100vh - 64px - 36px)", "margin": "0", "display": "block"},
     children=map_children + [marker_layer, marker_layer2]
 )
@@ -302,6 +306,7 @@ def build_layout():
         style={"margin": 0, "padding": 0, "height": "100vh",
                "overflow": "hidden", "display": "flex", "flexDirection": "column"}
     )
+
 
 
 
