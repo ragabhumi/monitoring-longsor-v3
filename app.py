@@ -61,6 +61,13 @@ SENSORS = [
     mk_sensor("adel_its_01", "004", -7.986949, 111.709909),
     mk_sensor("adel_its_01", "005", -7.987028, 111.710118),
     mk_sensor("adel_its_01", "006", -7.987231, 111.710224),
+    # Adel ITS 2
+    mk_sensor("adel_its_02", "007", -7.990362, 111.737555),
+    mk_sensor("adel_its_02", "008", -7.990692, 111.737354),
+    mk_sensor("adel_its_02", "009", -7.990813, 111.737721),
+    mk_sensor("adel_its_02", "010", -7.991751, 111.737446),
+    mk_sensor("adel_its_02", "011", -7.991590, 111.737822),
+    mk_sensor("adel_its_02", "012", -7.991254, 111.737917),
 ]
 
 # Status & ikon
@@ -127,6 +134,7 @@ def get_site_from_table(tb: str) -> str | None:
     if "adel_02" in tb: return "adel_02"
     if "adel_03" in tb: return "adel_03"
     if "adel_its_01" in tb: return "adel_its_01"
+    if "adel_its_02" in tb: return "adel_its_02"
     return None
 
 def to_float(x):
@@ -134,6 +142,7 @@ def to_float(x):
         return float(x)
     except Exception:
         return None
+
 
 
 
