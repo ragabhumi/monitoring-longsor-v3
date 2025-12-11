@@ -167,7 +167,7 @@ marker_layer = dl.LayerGroup(id="marker-layer", children=[])
 marker_layer2 = dl.Marker(
             position=[-7.991325, 111.738081],
             icon=dict(
-                iconUrl=app.get_asset_url(src="/assets/logo.png"),
+                iconUrl=app.get_asset_url("logo.png"),
                 iconSize=[30, 30],
                 iconAnchor=[15, 30]),
             children=[
@@ -306,6 +306,7 @@ def build_layout():
         style={"margin": 0, "padding": 0, "height": "100vh",
                "overflow": "hidden", "display": "flex", "flexDirection": "column"}
     )
+
 
 
 
