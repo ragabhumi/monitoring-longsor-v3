@@ -5,6 +5,7 @@ import pandas as pd
 import plotly.graph_objs as go
 from dash import Output, Input, State, no_update, ALL, html, dcc
 import dash_leaflet as dl
+import datetime as dt
 
 from app import (
     app, UTC,
@@ -67,8 +68,37 @@ def on_ws_message(message):
     return out
 
 # ====================== MARKERS (real-time) ======================
+EPOCH = dt.datetime(1970, 1, 1, tzinfo=dt.timezone.utc)
+
+def last_exceed_time(dyn: dict, key: str, thr: float = 1.0) -> dt.datetime:
+    if dyn is None:
+        return EPOCH
+    else:
+        times = dyn.get("time", [])
+        vals  = dyn.get(key, [])
+        # Cari semua indeks dengan nilai > thr
+        idxs = [i for i, v in enumerate(vals) if (v is not None) and (v > thr)]
+        if not idxs:
+            return EPOCH
+    # Ambil waktu terakhir (maks) berbasis timestamp, bukan sekadar indeks
+    # (jaga-jaga kalau data tidak terurut)
+    cand = [dt.datetime.fromisoformat(times[i].replace("Z", "+00:00")) for i in idxs]
+    return max(cand)
+
+def iso_utc(dtobj: dt.datetime) -> str:
+    # Kembalikan ISO-8601 dengan akhiran Z
+    return dtobj.astimezone(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    
 def make_marker_component(meta: dict, dyn: dict | None):
     last_seen_dt, last_status_txt, has_breach = None, None, False
+    now = dt.datetime.now(dt.timezone.utc)
+    # Terakhir melebihi threshold (terjadi longsor)
+    last_x_dt = last_exceed_time(dyn, "X", thr=1.0)
+    last_y_dt = last_exceed_time(dyn, "Y", thr=1.0)
+    last_z_dt = last_exceed_time(dyn, "Z", thr=1.0)
+    # Terakhir dari semua komponen
+    last_any_dt = max(last_x_dt, last_y_dt, last_z_dt)
+
     if dyn:
         if dyn.get("last_seen"):
             try:
@@ -80,9 +110,9 @@ def make_marker_component(meta: dict, dyn: dict | None):
             arr_x = np.array([v for v in (dyn.get("X") or []) if v is not None], dtype=float)
             arr_y = np.array([v for v in (dyn.get("Y") or []) if v is not None], dtype=float)
             arr_z = np.array([v for v in (dyn.get("Z") or []) if v is not None], dtype=float)
-            has_breach = (np.any(np.abs(arr_x) > 1.0) or
-                          np.any(np.abs(arr_y) > 1.0) or
-                          np.any(np.abs(arr_z) > 1.0))
+            has_breach = ((np.any(np.abs(arr_x) > 1.0) and (now-last_any_dt) <= dt.timedelta(hours=4)) or
+                          (np.any(np.abs(arr_y) > 1.0) and (now-last_any_dt) <= dt.timedelta(hours=4)) or
+                          (np.any(np.abs(arr_z) > 1.0) and (now-last_any_dt) <= dt.timedelta(hours=4)))
         except Exception:
             has_breach = False
 
