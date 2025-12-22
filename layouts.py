@@ -201,8 +201,8 @@ def graphs_layout(sensor_name, df, x_range=None, status_text="", last_seen_text=
         if not df.empty:
             fig.add_trace(go.Scatter(x=df["time"], y=df[col], mode="lines", name="Nilai"))
             fig.add_trace(go.Scatter(x=[df["time"].min(), df["time"].max()],
-                                     y=[1.0, 1.0], mode="lines",
-                                     name="Threshold = 1", line=dict(dash="dash")))
+                                     y=[2.0, 2.0], mode="lines",
+                                     name="Threshold = 2", line=dict(dash="dash")))
         else:
             fig.add_trace(go.Scatter(x=[], y=[], mode="lines", name="Nilai"))
         if x_range and x_range.get("start") and x_range.get("end"):
