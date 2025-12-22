@@ -21,7 +21,7 @@ UTC = getattr(dt, "UTC", dt.timezone.utc)
 # Ganti jika API/WS di host lain:
 API_BASE = "https://websocket-server-v2.onrender.com"
 # Kamu sudah set ini di filemu:
-WS_URL   = "wss://websocket-server-v2.onrender.com/ws?days=7"
+WS_URL   = "wss://websocket-server-v2.onrender.com/ws?days=3"
 
 # Tile layers
 OSM = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -142,6 +142,7 @@ def to_float(x):
         return float(x)
     except Exception:
         return None
+
 
 
 
