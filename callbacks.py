@@ -70,7 +70,7 @@ def on_ws_message(message):
 # ====================== MARKERS (real-time) ======================
 EPOCH = dt.datetime(1970, 1, 1, tzinfo=dt.timezone.utc)
 
-def last_exceed_time(dyn: dict, key: str, thr: float = 1.0) -> dt.datetime:
+def last_exceed_time(dyn: dict, key: str, thr: float = 2.0) -> dt.datetime:
     if dyn is None:
         return EPOCH
     else:
@@ -93,9 +93,9 @@ def make_marker_component(meta: dict, dyn: dict | None):
     last_seen_dt, last_status_txt, has_breach = None, None, False
     now = dt.datetime.now(dt.timezone.utc)
     # Terakhir melebihi threshold (terjadi longsor)
-    last_x_dt = last_exceed_time(dyn, "X", thr=1.0)
-    last_y_dt = last_exceed_time(dyn, "Y", thr=1.0)
-    last_z_dt = last_exceed_time(dyn, "Z", thr=1.0)
+    last_x_dt = last_exceed_time(dyn, "X", thr=2.0)
+    last_y_dt = last_exceed_time(dyn, "Y", thr=2.0)
+    last_z_dt = last_exceed_time(dyn, "Z", thr=2.0)
     # Terakhir dari semua komponen
     last_any_dt = max(last_x_dt, last_y_dt, last_z_dt)
 
@@ -110,9 +110,9 @@ def make_marker_component(meta: dict, dyn: dict | None):
             arr_x = np.array([v for v in (dyn.get("X") or []) if v is not None], dtype=float)
             arr_y = np.array([v for v in (dyn.get("Y") or []) if v is not None], dtype=float)
             arr_z = np.array([v for v in (dyn.get("Z") or []) if v is not None], dtype=float)
-            has_breach = ((np.any(np.abs(arr_x) > 1.0) and (now-last_any_dt) <= dt.timedelta(hours=4)) or
-                          (np.any(np.abs(arr_y) > 1.0) and (now-last_any_dt) <= dt.timedelta(hours=4)) or
-                          (np.any(np.abs(arr_z) > 1.0) and (now-last_any_dt) <= dt.timedelta(hours=4)))
+            has_breach = ((np.any(np.abs(arr_x) > 2.0) and (now-last_any_dt) <= dt.timedelta(hours=4)) or
+                          (np.any(np.abs(arr_y) > 2.0) and (now-last_any_dt) <= dt.timedelta(hours=4)) or
+                          (np.any(np.abs(arr_z) > 2.0) and (now-last_any_dt) <= dt.timedelta(hours=4)))
         except Exception:
             has_breach = False
 
@@ -207,7 +207,7 @@ def update_drawer(is_open, selected, style, x_range, ws_data):
     if is_open and selected:
         df, last_seen, last_status_txt = df_from_ws(ws_data, selected["site"], selected["sid"])
         has_breach = False
-        if not df.empty and (df[["X","Y","Z"]].abs() > 1.0).any(axis=1).tail(50).any():
+        if not df.empty and (df[["X","Y","Z"]].abs() > 2.0).any(axis=1).tail(50).any():
             has_breach = True
         status = decide_status_from_now(last_seen, has_breach, last_status_txt, stale_hours=8)
         last_txt = fmt_time_utc(last_seen)
@@ -322,7 +322,7 @@ def render_tab(active_tab, ws_data, _tick, selected, x_range):
     if not selected:
         return html.Div()
     df, last_seen, last_status_txt = df_from_ws(ws_data, selected["site"], selected["sid"])
-    has_breach = (not df.empty) and (df[["X","Y","Z"]].abs() > 1.0).any(axis=1).tail(50).any()
+    has_breach = (not df.empty) and (df[["X","Y","Z"]].abs() > 2.0).any(axis=1).tail(50).any()
     status = decide_status_from_now(last_seen, has_breach, last_status_txt, stale_hours=8)
     last_txt = fmt_time_utc(last_seen)
 
