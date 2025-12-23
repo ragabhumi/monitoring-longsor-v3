@@ -332,7 +332,8 @@ def render_tab(active_tab, ws_data, _tick, selected, x_range):
         if df.empty:
             return html.Div("Tidak ada data untuk ditampilkan.", style={"padding":"8px","color":"#555"})
         tail = df.tail(50).copy()
-        tail["time"] = tail["time"].dt.strftime("%Y-%m-%d %H:%M")
+        tail["time"] = tail["time"].dt.strftime("%Y-%m-%d %H:%M:%S")
+        tail = tail.sort_values(by='time', ascending=False)
         fig = go.Figure(
             data=[go.Table(
                 header=dict(values=list(tail.columns), fill_color="lightgrey", align="left"),
@@ -355,7 +356,7 @@ def render_tab(active_tab, ws_data, _tick, selected, x_range):
                     start = df.iloc[i]["time"]
                 if (not flag and start is not None) or (flag and i == len(above)-1):
                     end = df.iloc[i]["time"]
-                    rows.append([comp, start.strftime("%Y-%m-%d %H:%M"), end.strftime("%Y-%m-%d %H:%M")])
+                    rows.append([comp, start.strftime("%Y-%m-%d %H:%M:%S"), end.strftime("%Y-%m-%d %H:%M:%S")])
                     start = None
         if not rows:
             rows = [["-", "-", "-"]]
@@ -368,3 +369,4 @@ def render_tab(active_tab, ws_data, _tick, selected, x_range):
         )
         return html.Div(dcc.Graph(figure=fig), style={"height": "100%", "overflow": "auto"})
     return html.Div()
+
